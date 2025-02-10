@@ -1,0 +1,22 @@
+return {
+	adapter = {
+		type = "executable",
+		command = "gdb",
+		args = { "-i", "dap" },
+		--args = { "-iex", "set debug dap-log-file ~/gdb-15.1.log", "-i=dap" },
+		options = {
+			initialize_timeout_sec = 10
+		}
+	},
+	configurations = {
+		name = "Launch GDB",
+    type = "gdb",
+    request = "launch",
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = "${workspaceFolder}",
+    stopAtBeginningOfMainSubprogram = false
+	},
+	filetypes = {'c', 'cpp'}
+}
