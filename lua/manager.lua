@@ -11,11 +11,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local style = require "style"
+local style, s = require "style", require "style"
 
 require("lazy").setup("plugins", {
 	git = {
-		url_format = 'git@github.com:%s.git'
+		url_format = "git@github.com:%s.git",
 	},
 	checker = {
 		enabled = true,
@@ -23,18 +23,19 @@ require("lazy").setup("plugins", {
 		notify = false,
 		frequency = 3600,
 	},
-  ui = {
-    border = style.border,
-  },
-  diff = {
-    cmd = "diffview.nvim",
-  },
-  performance = {
-    rtp = {
-      -- Required in NixOS
-      reset = false,
-      disabled_plugins = {
-        "2html_plugin",
+	ui = {
+		border = style.border,
+		size = s.winRatioF,
+	},
+	diff = {
+		cmd = "diffview.nvim",
+	},
+	performance = {
+		rtp = {
+			-- Required in NixOS
+			reset = false,
+			disabled_plugins = {
+				"2html_plugin",
 				"getscript",
 				"getscriptPlugin",
 				"gzip",
@@ -50,8 +51,8 @@ require("lazy").setup("plugins", {
 				"vimball",
 				"vimballPlugin",
 				"zip",
-				"zipPlugin"
-      },
-    },
-  },
+				"zipPlugin",
+			},
+		},
+	},
 })

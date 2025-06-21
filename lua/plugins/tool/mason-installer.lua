@@ -1,6 +1,5 @@
--- vim.opt.path:append doesn't outside the home dir
-vim.env.PATH = vim.env.PATH .. require"utils".sys.pathSeparator
-	.. vim.fn.stdpath("data") .. "/mason/bin"
+local masonBin = vim.fn.stdpath("data") .. "/mason/bin"
+require "utils".env.PATH:append(masonBin)
 return {
 	"WhoIsSethDaniel/mason-tool-installer.nvim",
 	event = "VeryLazy",
@@ -9,8 +8,9 @@ return {
 		ensure_installed = {
 			"cpptools",
 			"lua-language-server",
-			"texlab"
-		}
+			"texlab",
+			"tinymist",
+		},
 	},
-	dependencies = {"williamboman/mason.nvim", config = true}
+	dependencies = { "williamboman/mason.nvim", config = true },
 }

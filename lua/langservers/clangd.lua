@@ -6,6 +6,6 @@ return {
 		"--completion-style=detailed",
 		"--cross-file-rename=true",
 		"--function-arg-placeholders=false",
-		"--header-insertion-decorators"
-	}
+		"--header-insertion-decorators",
+	},
 }

@@ -1,5 +1,5 @@
 vim.loader.enable()
 require "options"
-require "keymaps"
+require "plainkeys"
 require "filetype"
 require "manager"

@@ -2,11 +2,11 @@ return {
 	"utilyre/barbecue.nvim",
 	dependencies = {
 		"SmiteshP/nvim-navic",
-		"nvim-tree/nvim-web-devicons"
+		"nvim-tree/nvim-web-devicons",
 	},
 	opts = {
-		theme = 'tokyonight',
-		exclude_filetypes = {"neo-tree", "toggleterm"}
+		exclude_filetypes = { "neo-tree", "toggleterm" },
 	},
-	event = 'VeryLazy'
+	event = "VeryLazy",
+	enabled = false,
 }

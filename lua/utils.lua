@@ -1,55 +1,60 @@
-local M = { sys = {} }
+local M = {}
 
-M.filename = vim.fs.basename
+local PlenaryPath = require "plenary.path"
+local Path = PlenaryPath:new()
+Path.__index = Path
+M.Path = Path
 
-M.dirname = vim.fs.dirname
-
-M.basename = function(path)
-	return vim.fn.fnamemodify(M.filename(path), ':r')
-end
-
-M.extension = function(path)
-	local ext = vim.fn.fnamemodify(path, ':e')
-	if ext ~= "" then
-		return ext
-	end
-	-- Deal with the situation like ".vimrc"
-	local filename = M.filename(path)
-	if filename:sub(1, 1) == '.' then
-		return filename:sub(2, -1)
-	else
-		return ""
-	end
-end
-
-local File = {}
-File.__index = File
-M.File = File
-
-function File.new(name, typ)
-	local self = setmetatable({}, File)
-	self.name = name
+function Path.new(nameOrTable, typ)
+	local self = PlenaryPath:new(nameOrTable)
+	setmetatable(self, Path)
 	self.type = typ
 	return self
 end
 
-function File:isNormalFile()
-	return self.type == "file" or self.type == "link"
+function Path.is_path(a)
+	local metatable = getmetatable(a)
+	return metatable == PlenaryPath or metatable == Path
+end
+PlenaryPath.is_path = Path.is_path
+
+function Path:stem() return vim.fn.fnamemodify(self.filename, ":t:r") end
+
+function Path:suffix() return vim.fn.fnamemodify(self.filename, ":e") end
+
+--[[function Path:isNormalFile()
+	return self.type == "file" or self.type == ""
+end]]
+
+-- A name inherited from JAVA
+Path.pathSeparator = isWin and ";" or ":"
+
+M.getModuleFilesInDir = function(dir)
+	return vim
+		.iter(vim.fs.dir(dir))
+		:map(Path.new)
+		:filter(function(file) return file.type == "file" and file:suffix() == "lua" end)
 end
 
-function File:hasExtOf(ext)
-	local fileExt = M.extension(self.name)
-	return fileExt == ext
+M.getModuleNamesInDir = function(dir)
+	return M.getModuleFilesInDir(dir):map(function(file) return file:stem() end)
 end
 
-M.isLuaFile = function(file)
-	return file:isNormalFile() and file:hasExtOf("lua")
-end
+M.env = {}
+setmetatable(M.env, {
+	__newindex = function(_, key, val) vim.env[key] = val end,
+	__index = function(_, key)
+		return {
+			append = function(_, val)
+				-- Can't use vim.opt.path:append() for env PATH, it's for nvim builtin commands
+				-- see :h 'path'
+				vim.env[key] = vim.env[key] .. Path.pathSeparator .. val
+			end,
+		}
+	end,
+})
 
-M.sys.pathSeparator =
-	-- No one uses Dos or so on any more, right?
-	vim.loop.os_uname().sysname == "Windows_NT"
-	and ';'
-	or ':'
+M.file = function() return vim.fn.expand("%:p") end
+M.fileRoot = function() return vim.fn.expand("%:p:r") end
 
 return M

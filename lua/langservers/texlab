@@ -1,2 +1,0 @@
--- it's strange that you'll get true from this module if it is empty or returns nil 
-return false
