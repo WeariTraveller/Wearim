@@ -1,0 +1,26 @@
+{
+	"$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+	"runtime": {
+		"version": "LuaJIT"
+	},
+	"workspace": {
+		"library": [
+			"$VIMRUNTIME",
+			"${3rd}/luv/library",
+			"$LAZYROOT/*"
+		],
+		"ignoreDir": [
+			"lua/snippets"
+		],
+		"maxPreload": 2000,
+		"preloadFileSize": 100
+	},
+	"diagnostics.disable": [
+		"missing-fields"
+	],
+	"hint": {
+		"enable": true,
+		"arrayIndex": "Disable"
+	},
+	"format.enable": false
+}
