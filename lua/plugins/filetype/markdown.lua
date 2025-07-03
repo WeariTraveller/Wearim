@@ -1,10 +1,18 @@
+vim.cmd [[
+function OpenMarkdownPreview(url)
+	execute "silent ! firefox --new-tab " . a:url
+endfunction
+]]
+
 return {
 	"iamcco/markdown-preview.nvim",
 	build = "cd app && npm install",
-	init = function() vim.g.mkdp_filetypes = { "markdown" } end,
+	init = function()
+		vim.g.mkdp_browserfunc = "OpenMarkdownPreview"
+		vim.g.mkdp_filetypes = { "markdown" }
+	end,
 	ft = { "markdown" },
 	keys = {
-		{ "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Preview" },
-		{ "<leader>ms", "<cmd>MarkdownPreviewStop<cr>", desc = "Preview Stop" },
+		{ "<leader>mt", "<cmd>MarkdownPreviewToggle<cr>", desc = "Preview Toggle" },
 	},
 }

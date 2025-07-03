@@ -1,0 +1,25 @@
+{
+  "name": "wearim-hooks",
+  "version": "1.0.0",
+  "description": "Used to manage git hooks in Wearim",
+  "homepage": "https://github.com/WeariTraveller/Wearim#readme",
+  "bugs": {
+    "url": "https://github.com/WeariTraveller/Wearim/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WeariTraveller/Wearim.git"
+  },
+  "license": "GPL-3.0-or-later",
+  "author": "WeariTraveller",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "git-format-staged": "^3.1.1",
+    "husky": "^9.1.7"
+  }
+}
