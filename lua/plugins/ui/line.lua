@@ -1,7 +1,7 @@
 local stateOpts = {
   sections = {
     lualine_c = { "encoding", "fileformat", "filename" },
-    lualine_x = {},
+    lualine_x = { "lsp_status" },
     lualine_y = { require "plugins.filetype.xmake".lualine, "overseer" },
     lualine_z = { "diagnostics", "progress", "location" },
   },
