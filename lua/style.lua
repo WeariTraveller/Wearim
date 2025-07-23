@@ -89,54 +89,53 @@ M.icons = {
   -- LSP kinds
   kind = kind_icons,
   kind_with_space = append_space(kind_icons),
-  -- DAP breakpoint
-  breakpoint = {
-    default = {
+  -- Icons that need defining manaully through loops
+  manaul = {
+    DapBreakpoint = {
       text = "",
       texthl = "DapBreakpoint",
       linehl = "DapBreakpoint",
       numhl = "DapBreakpoint",
     },
-    condition = {
+    DapBreakpointCondition = {
       text = "ﳁ",
       texthl = "DapBreakpoint",
       linehl = "DapBreakpoint",
       numhl = "DapBreakpoint",
     },
-    rejected = {
+    DapBreakpointRejected = {
       text = "",
       texthl = "DapBreakpint",
       linehl = "DapBreakpoint",
       numhl = "DapBreakpoint",
     },
-  },
-  logpoint = {
-    text = "",
-    texthl = "DapLogPoint",
-    linehl = "DapLogPoint",
-    numhl = "DapLogPoint",
-  },
-  stopped = {
-    text = "",
-    texthl = "DapStopped",
-    linehl = "DapStopped",
-    numhl = "DapStopped",
+    DapLogPoint = {
+      text = "",
+      texthl = "DapLogPoint",
+      linehl = "DapLogPoint",
+      numhl = "DapLogPoint",
+    },
+    DapStopped = {
+      text = "",
+      texthl = "DapStopped",
+      linehl = "DapStopped",
+      numhl = "DapStopped",
+    },
   },
 }
 
 M.colours = {
-  -- DAP colour
-  breakpoint = {
+  DapBreakpoint = {
     ctermbg = 0,
     fg = "#98c379",
     bg = "#31353f",
   },
-  logpoint = {
+  DapLogPoint = {
     ctermbg = 0,
     fg = "#61afef",
     bg = "#31353f",
   },
-  stopped = {
+  DapStopped = {
     ctermbg = 0,
     fg = "#ffc633",
     bg = "#31353f",

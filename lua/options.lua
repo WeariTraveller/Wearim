@@ -73,12 +73,10 @@ vim.diagnostic.config {
   },
 }
 
--- Set breakpoint and its style
-vim.fn.sign_define("DapBreakpoint", style.icons.breakpoint.default)
-vim.fn.sign_define("DapBreakpointCondition", style.icons.breakpoint.condition)
-vim.fn.sign_define("DapBreakpointRejected", style.icons.breakpoint.rejected)
-vim.fn.sign_define("DapLogPoint", style.icons.logpoint)
-vim.fn.sign_define("DapStopped", style.icons.stopped)
-vim.api.nvim_set_hl(0, "DapBreakpoint", style.colours.breakpoint)
-vim.api.nvim_set_hl(0, "DapLogPoint", style.colours.logpoint)
-vim.api.nvim_set_hl(0, "DapStopped", style.colours.stopped)
+-- Set special icons and highlights
+for name, icon in pairs(style.icons.manaul) do
+  vim.fn.sign_define(name, icon)
+end
+for name, colour in pairs(style.colours) do
+  vim.api.nvim_set_hl(0, name, colour)
+end
