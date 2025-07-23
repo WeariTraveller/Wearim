@@ -30,9 +30,11 @@ local opts = {
       },
       {
         source = "document_symbols",
-        display_name = "  Symbols",
+        display_name = "  Symbols",
       },
     },
+    highlight_separator = "NeoTreeTabInactive",
+    highlight_separator_active = "NeoTreeTabActive",
   },
   window = {
     width = style.widthNr,
