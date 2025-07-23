@@ -1,4 +1,4 @@
 return {
-	"wellle/targets.vim",
-	event = "VeryLazy",
+  "wellle/targets.vim",
+  event = "VeryLazy",
 }

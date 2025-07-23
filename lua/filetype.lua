@@ -1,7 +1,7 @@
 vim.filetype.add({
-	extension = {
-		ixx = "cpp",
-		cppm = "cpp",
-		cls = "tex",
-	},
+  extension = {
+    ixx = "cpp",
+    cppm = "cpp",
+    cls = "tex",
+  },
 })

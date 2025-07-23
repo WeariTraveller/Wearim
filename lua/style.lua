@@ -10,19 +10,19 @@ M.prefer_tabpage = true
 M.border = "rounded"
 
 M.clamp = function(val, lowerBound, upperBound)
-	if lowerBound and val < lowerBound then
-		return lowerBound
-	elseif upperBound and val > upperBound then
-		return upperBound
-	end
-	return val
+  if lowerBound and val < lowerBound then
+    return lowerBound
+  elseif upperBound and val > upperBound then
+    return upperBound
+  end
+  return val
 end
 
 M.winRatioF = { width = 0.7, height = 0.6 }
 -- Broader or narrower width of side windows
 M.widthBd = function()
-	local width = math.floor(vim.go.columns * M.winRatioF.width)
-	return M.clamp(width, 48)
+  local width = math.floor(vim.go.columns * M.winRatioF.width)
+  return M.clamp(width, 48)
 end
 M.widthNr = 35
 M.width = function() return vim.go.columns * 0.27 end
@@ -34,113 +34,113 @@ M.height = function() return vim.go.lines * 0.27 end
 M.vertOrHoriz = function() return vim.go.columns > vim.go.lines and "vertical" or "horizontal" end
 
 local append_space = function(icons)
-	local result = {}
-	for k, v in pairs(icons) do
-		result[k] = v .. " "
-	end
-	return result
+  local result = {}
+  for k, v in pairs(icons) do
+    result[k] = v .. " "
+  end
+  return result
 end
 
 local kind_icons = {
-	Array = "",
-	Boolean = "",
-	Class = "",
-	Color = "",
-	Constant = "",
-	Constructor = "",
-	Enum = "",
-	EnumMember = "",
-	Event = "",
-	Field = "",
-	File = "",
-	Folder = "",
-	Function = "",
-	Interface = "",
-	Key = "",
-	Keyword = "",
-	Method = "",
-	Module = "",
-	Namespace = "",
-	Null = "",
-	Number = "",
-	Object = "",
-	Operator = "",
-	Package = "",
-	Property = "",
-	Reference = "",
-	Snippet = "",
-	String = "",
-	Struct = "",
-	Text = "",
-	TypeParameter = "",
-	Unit = "",
-	Value = "",
-	Variable = "",
+  Array = "",
+  Boolean = "",
+  Class = "",
+  Color = "",
+  Constant = "",
+  Constructor = "",
+  Enum = "",
+  EnumMember = "",
+  Event = "",
+  Field = "",
+  File = "",
+  Folder = "",
+  Function = "",
+  Interface = "",
+  Key = "",
+  Keyword = "",
+  Method = "",
+  Module = "",
+  Namespace = "",
+  Null = "",
+  Number = "",
+  Object = "",
+  Operator = "",
+  Package = "",
+  Property = "",
+  Reference = "",
+  Snippet = "",
+  String = "",
+  Struct = "",
+  Text = "",
+  TypeParameter = "",
+  Unit = "",
+  Value = "",
+  Variable = "",
 }
 
 M.icons = {
-	-- LSP diagnostic
-	diagnostic = {
-		error = "󰅚 ",
-		warn = "󰀪 ",
-		hint = "󰌶 ",
-		info = "󰋽 ",
-	},
-	-- LSP kinds
-	kind = kind_icons,
-	kind_with_space = append_space(kind_icons),
-	-- DAP breakpoint
-	breakpoint = {
-		default = {
-			text = "",
-			texthl = "DapBreakpoint",
-			linehl = "DapBreakpoint",
-			numhl = "DapBreakpoint",
-		},
-		condition = {
-			text = "ﳁ",
-			texthl = "DapBreakpoint",
-			linehl = "DapBreakpoint",
-			numhl = "DapBreakpoint",
-		},
-		rejected = {
-			text = "",
-			texthl = "DapBreakpint",
-			linehl = "DapBreakpoint",
-			numhl = "DapBreakpoint",
-		},
-	},
-	logpoint = {
-		text = "",
-		texthl = "DapLogPoint",
-		linehl = "DapLogPoint",
-		numhl = "DapLogPoint",
-	},
-	stopped = {
-		text = "",
-		texthl = "DapStopped",
-		linehl = "DapStopped",
-		numhl = "DapStopped",
-	},
+  -- LSP diagnostic
+  diagnostic = {
+    error = "󰅚 ",
+    warn = "󰀪 ",
+    hint = "󰌶 ",
+    info = "󰋽 ",
+  },
+  -- LSP kinds
+  kind = kind_icons,
+  kind_with_space = append_space(kind_icons),
+  -- DAP breakpoint
+  breakpoint = {
+    default = {
+      text = "",
+      texthl = "DapBreakpoint",
+      linehl = "DapBreakpoint",
+      numhl = "DapBreakpoint",
+    },
+    condition = {
+      text = "ﳁ",
+      texthl = "DapBreakpoint",
+      linehl = "DapBreakpoint",
+      numhl = "DapBreakpoint",
+    },
+    rejected = {
+      text = "",
+      texthl = "DapBreakpint",
+      linehl = "DapBreakpoint",
+      numhl = "DapBreakpoint",
+    },
+  },
+  logpoint = {
+    text = "",
+    texthl = "DapLogPoint",
+    linehl = "DapLogPoint",
+    numhl = "DapLogPoint",
+  },
+  stopped = {
+    text = "",
+    texthl = "DapStopped",
+    linehl = "DapStopped",
+    numhl = "DapStopped",
+  },
 }
 
 M.colours = {
-	-- DAP colour
-	breakpoint = {
-		ctermbg = 0,
-		fg = "#98c379",
-		bg = "#31353f",
-	},
-	logpoint = {
-		ctermbg = 0,
-		fg = "#61afef",
-		bg = "#31353f",
-	},
-	stopped = {
-		ctermbg = 0,
-		fg = "#ffc633",
-		bg = "#31353f",
-	},
+  -- DAP colour
+  breakpoint = {
+    ctermbg = 0,
+    fg = "#98c379",
+    bg = "#31353f",
+  },
+  logpoint = {
+    ctermbg = 0,
+    fg = "#61afef",
+    bg = "#31353f",
+  },
+  stopped = {
+    ctermbg = 0,
+    fg = "#ffc633",
+    bg = "#31353f",
+  },
 }
 
 return M

@@ -6,15 +6,15 @@ Path.__index = Path
 M.Path = Path
 
 function Path.new(nameOrTable, typ)
-	local self = PlenaryPath:new(nameOrTable)
-	setmetatable(self, Path)
-	self.type = typ
-	return self
+  local self = PlenaryPath:new(nameOrTable)
+  setmetatable(self, Path)
+  self.type = typ
+  return self
 end
 
 function Path.is_path(a)
-	local metatable = getmetatable(a)
-	return metatable == PlenaryPath or metatable == Path
+  local metatable = getmetatable(a)
+  return metatable == PlenaryPath or metatable == Path
 end
 PlenaryPath.is_path = Path.is_path
 
@@ -30,28 +30,28 @@ end]]
 Path.pathSeparator = isWin and ";" or ":"
 
 M.getModuleFilesInDir = function(dir)
-	return vim
-		.iter(vim.fs.dir(dir))
-		:map(Path.new)
-		:filter(function(file) return file.type == "file" and file:suffix() == "lua" end)
+  return vim
+    .iter(vim.fs.dir(dir))
+    :map(Path.new)
+    :filter(function(file) return file.type == "file" and file:suffix() == "lua" end)
 end
 
 M.getModuleNamesInDir = function(dir)
-	return M.getModuleFilesInDir(dir):map(function(file) return file:stem() end)
+  return M.getModuleFilesInDir(dir):map(function(file) return file:stem() end)
 end
 
 M.env = {}
 setmetatable(M.env, {
-	__newindex = function(_, key, val) vim.env[key] = val end,
-	__index = function(_, key)
-		return {
-			append = function(_, val)
-				-- Can't use vim.opt.path:append() for env PATH, it's for nvim builtin commands
-				-- see :h 'path'
-				vim.env[key] = vim.env[key] .. Path.pathSeparator .. val
-			end,
-		}
-	end,
+  __newindex = function(_, key, val) vim.env[key] = val end,
+  __index = function(_, key)
+    return {
+      append = function(_, val)
+        -- Can't use vim.opt.path:append() for env PATH, it's for nvim builtin commands
+        -- see :h 'path'
+        vim.env[key] = vim.env[key] .. Path.pathSeparator .. val
+      end,
+    }
+  end,
 })
 
 M.file = function() return vim.fn.expand("%:p") end

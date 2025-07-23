@@ -22,20 +22,19 @@ map("n", "sl", "<cmd>resize -10<CR>", "Win ↕size -10")
 map("n", "sh", "<cmd>resize +10<CR>", "Win ↕size +10")
 -- Solve the problem that sometimes the window remains after normal bd
 map("n", "<A-d>", function()
-	local buf = vim.api.nvim_get_current_buf()
-	vim.cmd "close"
-	vim.cmd("bd " .. buf)
+  local buf = vim.api.nvim_get_current_buf()
+  vim.cmd "close"
+  vim.cmd("bd " .. buf)
 end, "bd")
 map("n", "<A-D>", function()
-	local buf = vim.api.nvim_get_current_buf()
-	vim.cmd "close!"
-	vim.cmd("bd! " .. buf)
+  local buf = vim.api.nvim_get_current_buf()
+  vim.cmd "close!"
+  vim.cmd("bd! " .. buf)
 end, "bd!")
 
 -- Indent
 map("v", "<", "<gv", "Indent")
 map("v", ">", ">gv", "Unindent")
-map("i", "<S-Tab>", "    ", "Four spaces")
 
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", "Save")
 map("n", "<A-q>", "<cmd>qa<cr>", "Quit")
@@ -52,13 +51,13 @@ map("t", "<A-C>", [[<C-\><C-O>]], "Do only one normal command")
 
 -- Code
 local function toggle_quickfix()
-	local wins = vim.fn.getwininfo()
-	local qf_win = vim.iter(wins):filter(function(win) return win.quickfix == 1 end):totable()
-	if #qf_win == 0 then
-		vim.cmd.copen()
-	else
-		vim.cmd.cclose()
-	end
+  local wins = vim.fn.getwininfo()
+  local qf_win = vim.iter(wins):filter(function(win) return win.quickfix == 1 end):totable()
+  if #qf_win == 0 then
+    vim.cmd.copen()
+  else
+    vim.cmd.cclose()
+  end
 end
 
 map("n", "<leader>q", toggle_quickfix, "Quickfix")
@@ -68,7 +67,7 @@ map("n", "<leader>hq", function() vim.treesitter.query.edit() end, "Treesitter Q
 
 -- Force the insertion of a single punct
 for _, punct in pairs { "(", ")", "[", "]", "{", "}" } do
-	map("i", "<A-" .. punct .. ">", punct)
+  map("i", "<A-" .. punct .. ">", punct)
 end
 
 -- lspsaga
