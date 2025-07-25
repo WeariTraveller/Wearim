@@ -15,11 +15,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
+  "nano-staged": {
+    "*.lua": "stylua"
+  },
   "devDependencies": {
-    "git-format-staged": "^3.1.1",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "nano-staged": "^0.8.0"
   }
 }

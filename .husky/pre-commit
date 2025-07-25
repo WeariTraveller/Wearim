@@ -1,3 +1,3 @@
 #!/bin/sh
 
-git-format-staged --formatter "stylua -" "*.lua"
+nano-staged --allow-empty
