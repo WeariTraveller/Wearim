@@ -16,6 +16,13 @@ return {
   {
     "glepnir/lspsaga.nvim",
     event = "LspAttach",
-    config = { symbol_in_winbar = { enable = false } },
+    config = {
+      symbol_in_winbar = { enable = false },
+      lightbulb = {
+        enable = true,
+        sign = false,
+        virtual_text = true,
+      },
+    },
   },
 }
