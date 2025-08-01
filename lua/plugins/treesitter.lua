@@ -19,6 +19,7 @@ local tsOpts = {
     "latex",
     "javascript",
     "json",
+    "typescript",
   },
   incremental_selection = {
     enable = true,
