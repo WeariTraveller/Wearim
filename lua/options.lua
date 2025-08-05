@@ -20,7 +20,7 @@ vim.opt.fileencodings = {
 }
 vim.opt.viminfofile = "NONE"
 vim.g.mapleader = ","
-vim.opt.fileformats = "unix"
+vim.opt.fileformats = { "unix", "dos" }
 
 -- UI
 vim.opt.termguicolors = true
