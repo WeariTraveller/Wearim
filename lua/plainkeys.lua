@@ -42,8 +42,19 @@ map("n", "<A-Q>", "<cmd>qa!<cr>", "Force quit")
 map("n", "sc", "<C-w>c", "Close curr")
 map("n", "<A-C>", "<cmd>close!<cr>", "Force close curr")
 map("n", "so", "<C-w>o", "Close others")
+
+if vim.fn.has("clipboard") == true then
+  -- Use sys clipboard by default
+  vim.opt.clipboard:append("unnamedplus")
+end
 map("v", "<A-y>", '"+y', "Copy to sys")
 map("n", "<A-p>", '"+p', "Paste from sys")
+vim.keymap.set(
+  { "i", "c" },
+  "<A-p>",
+  function() return vim.fn.getreg("+") end,
+  { expr = true, desc = "Paste from sys" }
+)
 
 -- Term
 map("t", "<A-E>", [[<C-\><C-N>]], "Escape from mode t")
