@@ -1,10 +1,7 @@
 local lspConfig = function()
-  local utils = require "utils"
   local lspconfig = require "lspconfig"
 
-  utils
-    .getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langservers")
-    :each(function(modul) lspconfig[modul].setup(require("langservers." .. modul) or {}) end)
+  require "langs".lspIter:each(function(config) lspconfig[config.name].setup(config) end)
 end
 
 return {

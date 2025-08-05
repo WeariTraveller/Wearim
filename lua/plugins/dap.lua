@@ -1,14 +1,12 @@
 local dapConfig = function()
-  local utils = require "utils"
   local dap = require "dap"
   --dap.set_log_level("DEBUG")
 
-  utils.getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/dbgadapters"):each(function(modul)
-    local custom = require("dbgadapters." .. modul)
-    dap.adapters[modul] = custom.adapter
-    for _, ft in pairs(custom.filetypes) do
+  require "langs".dapIter:each(function(config)
+    dap.adapters[config.name] = config.adapter
+    for _, ft in pairs(config.filetypes) do
       if not dap.configurations[ft] then dap.configurations[ft] = {} end
-      table.insert(dap.configurations[ft], custom.configurations)
+      table.insert(dap.configurations[ft], config.configurations)
     end
   end)
 end
