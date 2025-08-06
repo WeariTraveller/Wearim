@@ -1,4 +1,5 @@
-return {
+local lsp = {
+  name = "texlab",
   settings = {
     texlab = {
       forwardSearch = {
@@ -15,3 +16,5 @@ return {
     },
   },
 }
+
+return { lsp = lsp }

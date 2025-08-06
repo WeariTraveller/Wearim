@@ -7,20 +7,7 @@ local tsOpts = {
   highlight = {
     enable = true,
   },
-  ensure_installed = {
-    "c",
-    "cpp",
-    "lua",
-    "vim",
-    "vimdoc",
-    "regex",
-    "markdown",
-    "markdown_inline",
-    "latex",
-    "javascript",
-    "json",
-    "typescript",
-  },
+  ensure_installed = require "langs".list,
   incremental_selection = {
     enable = true,
     keymaps = {

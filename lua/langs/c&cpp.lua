@@ -1,4 +1,18 @@
-return {
+local lsp = {
+  name = "clangd",
+  cmd = {
+    "clangd",
+    "--pretty",
+    "--all-scopes-completion",
+    "--completion-style=detailed",
+    "--cross-file-rename=true",
+    "--function-arg-placeholders=false",
+    "--header-insertion-decorators",
+  },
+}
+
+local dap = {
+  name = "gdb",
   adapter = {
     type = "executable",
     command = "gdb",
@@ -18,3 +32,5 @@ return {
   },
   filetypes = { "c", "cpp" },
 }
+
+return { lsp = lsp, dap = dap }
