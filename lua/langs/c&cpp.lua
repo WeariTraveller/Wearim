@@ -30,7 +30,6 @@ local dap = {
     cwd = "${workspaceFolder}",
     stopAtBeginningOfMainSubprogram = true,
   },
-  filetypes = { "c", "cpp" },
 }
 
 return { lsp = lsp, dap = dap }
