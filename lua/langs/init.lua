@@ -1,5 +1,5 @@
 local M = {}
-local utils = require "utils"
+local t = require "utils"
 
 local langList = {}
 M.list = langList
@@ -11,7 +11,7 @@ local langModuleMaps = {}
 --    That's incorrect. See examples/iter.lua
 -- 3. What be Iter:map()ed to nil will be filtered.
 
-M.lspIter = utils
+M.lspIter = t
   .getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langs")
   -- First, this part deals with langList and langModuleMaps
   :filter(function(modul) return modul ~= "init" end)
@@ -23,11 +23,11 @@ M.lspIter = utils
     end
     langModuleMaps[modul] = langs
     -- Next, this part actually generates lspIter
-    return require("langs." .. modul).lsp
+    return t.oc(require("langs." .. modul), "lsp")
   end)
 
 M.dapIter = vim.iter(langModuleMaps):map(function(modul, filetypes)
-  local config = require("langs." .. modul).dap
+  local config = t.oc(require("langs." .. modul), "dap")
   if config == nil then return nil end
   if config.filetypes == nil then config.filetypes = filetypes end
   return config
