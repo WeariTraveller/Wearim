@@ -2,8 +2,7 @@ return {
   "folke/which-key.nvim",
   keys = {
     {
-      -- In Windows Terminal, nvim get <C-_> if you type <C-/>
-      "<c-_>",
+      "<c-h>",
       function() require("which-key").show({ gobal = false }) end,
       desc = "Which-key",
       mode = { "n", "i", "c", "s" },
@@ -12,6 +11,9 @@ return {
   -- Which-key itself can't lazy load by key!
   event = "VeryLazy",
   opts = {
-    spec = { "<m-=>", desc = "Toggle term" },
+    spec = {
+      { "<m-=>", desc = "Toggle term" },
+      require "plugins.tool.telescope".whichKey,
+    },
   },
 }

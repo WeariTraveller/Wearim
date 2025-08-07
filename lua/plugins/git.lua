@@ -28,7 +28,7 @@ return {
     },
   },
   keys = { {
-    "<leader>gt",
+    "gt",
     function() require("neogit").open() end,
     desc = "Open Neogit",
   } },

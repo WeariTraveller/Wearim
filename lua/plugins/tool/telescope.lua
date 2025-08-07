@@ -77,78 +77,79 @@ local config = function(_, opts)
 end
 
 local keys = {
+  { "t", "<nop>", group = "telescope" },
   {
-    "<leader>tf",
+    "tf",
     function() require("telescope.builtin").find_files() end,
     desc = "Files",
   },
   {
-    "<leader>tb",
+    "tb",
     function() require("telescope.builtin").buffers() end,
     desc = "Buffers",
   },
   {
-    "<leader>t?",
+    "t?",
     function() require("telescope.builtin").help_tags() end,
     desc = "Telescope help",
   },
   {
-    "<leader>to",
+    "to",
     function() require("telescope.builtin").oldfiles() end,
     desc = "Opened files",
   },
   {
-    "<leader>tm",
+    "tm",
     function() require("telescope.builtin").marks() end,
     desc = "Marks",
   },
   {
-    "<leader>ts",
+    "ts",
     function() require("telescope.builtin").lsp_document_symbols() end,
     desc = "Lsp doc buffer symbols",
   },
   {
-    "<leader>tS",
+    "tS",
     function() require("telescope.builtin").lsp_workspace_symbols() end,
     desc = "Lsp doc workspace symbols",
   },
   {
-    "<leader>tj",
+    "tj",
     function() require("telescope.builtin").jumplist() end,
     desc = "Jumplist",
   },
   {
-    "<leader>tg",
+    "tg",
     function() require("telescope").extensions.live_grep_args.live_grep_args() end,
     desc = "Live grep",
   },
   {
-    "<leader>tn",
+    "tn",
     function() require("telescope").extensions.notify.notify() end,
     desc = "Notify",
   },
   {
-    "<leader>tc",
+    "tc",
     function() require("telescope").extensions.dap.commands() end,
     desc = "Commands",
   },
   {
-    "<leader>ti",
+    "ti",
     function() require("telescope").extensions.dap.configurations() end,
     desc = "Configurations",
   },
   {
-    "<leader>tp",
+    "tp",
     function() require("telescope").extensions.dap.list_breakpoints() end,
     desc = "Breakpoints",
   },
   {
-    "<leader>tv",
+    "tv",
     function() require("telescope").extensions.dap.variables() end,
     desc = "Variables",
   },
   {
-    "<leader>tw",
+    "tw",
     function() require("telescope").extensions.dap.frames() end,
     desc = "Frames",
   },
@@ -169,5 +170,6 @@ return {
   cmd = {
     "Telescope",
   },
-  keys = keys,
+  lazy = true,
+  whichKey = keys,
 }
