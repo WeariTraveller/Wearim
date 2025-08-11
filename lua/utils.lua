@@ -70,17 +70,17 @@ end
 -- Each value in optional chaining
 M.eoc = function(firstborn, ...)
   local keys = { ... }
-  local results = {}
   local generation = firstborn
+  local results = { generation }
   for i = 1, #keys do
     if type(generation) ~= "table" then
       -- Let Lua replace remaining property accesses with nil at mult-assignment
       break
     end
     generation = generation[keys[i]]
-    results[i] = generation
+    table.insert(results, generation)
   end
-  return table.unpack(results)
+  return unpack(results)
 end
 
 return M
