@@ -2,7 +2,7 @@ return {
   "folke/which-key.nvim",
   keys = {
     {
-      "<c-h>",
+      "<C-k>",
       function() require("which-key").show({ gobal = false }) end,
       desc = "Which-key",
       mode = { "n", "i", "c", "s" },

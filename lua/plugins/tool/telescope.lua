@@ -77,7 +77,7 @@ local config = function(_, opts)
 end
 
 local keys = {
-  { "t", "<nop>", group = "telescope" },
+  { "t", group = "telescope" },
   {
     "tf",
     function() require("telescope.builtin").find_files() end,
@@ -119,6 +119,11 @@ local keys = {
     desc = "Jumplist",
   },
   {
+    "<C-h>",
+    function() require("telescope.builtin").keymaps() end,
+    desc = "Search keymaps",
+  },
+  {
     "tg",
     function() require("telescope").extensions.live_grep_args.live_grep_args() end,
     desc = "Live grep",
@@ -129,29 +134,33 @@ local keys = {
     desc = "Notify",
   },
   {
-    "tc",
-    function() require("telescope").extensions.dap.commands() end,
-    desc = "Commands",
-  },
-  {
-    "ti",
-    function() require("telescope").extensions.dap.configurations() end,
-    desc = "Configurations",
-  },
-  {
-    "tp",
-    function() require("telescope").extensions.dap.list_breakpoints() end,
-    desc = "Breakpoints",
-  },
-  {
-    "tv",
-    function() require("telescope").extensions.dap.variables() end,
-    desc = "Variables",
-  },
-  {
-    "tw",
-    function() require("telescope").extensions.dap.frames() end,
-    desc = "Frames",
+    "td",
+    group = "DAP",
+    {
+      "tdc",
+      function() require("telescope").extensions.dap.commands() end,
+      desc = "Commands",
+    },
+    {
+      "tdt",
+      function() require("telescope").extensions.dap.configurations() end,
+      desc = "Tasks (Configurations)",
+    },
+    {
+      "tdb",
+      function() require("telescope").extensions.dap.list_breakpoints() end,
+      desc = "Breakpoints",
+    },
+    {
+      "tdv",
+      function() require("telescope").extensions.dap.variables() end,
+      desc = "Variables",
+    },
+    {
+      "tdf",
+      function() require("telescope").extensions.dap.frames() end,
+      desc = "Frames",
+    },
   },
 }
 
