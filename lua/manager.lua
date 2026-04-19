@@ -17,6 +17,7 @@ local style, s = require "style", require "style"
 require("lazy").setup("plugins", {
   git = {
     url_format = "git@github.com:%s.git",
+    timeout = 300,
   },
   checker = {
     enabled = true,
