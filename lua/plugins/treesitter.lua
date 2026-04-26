@@ -1,24 +1,3 @@
-vim.wo.foldmethod = "expr"
-vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
--- won't be folded even in fact the level > 99
-vim.wo.foldlevel = 99
-
-local tsOpts = {
-  highlight = {
-    enable = true,
-  },
-  ensure_installed = require "langs".list,
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = "<CR>",
-      node_incremental = "<CR>",
-      node_decremental = "<BS>",
-      scope_incremental = "<TAB>",
-    },
-  },
-}
-
 local builder = (function()
   local queries = {
     { "@parameter.outer", "parameter" },
@@ -73,25 +52,35 @@ local tsObjOpts = {
   },
 }
 
+local tssetup = function()
+  local ts = require "nvim-treesitter"
+  if not ts.get_installed() then ts.install(require "langs".list) end
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = require "langs".list,
+    callback = function()
+      vim.treesitter.start()
+      vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+      vim.wo.foldmethod = "expr"
+      vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+  })
+end
+
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    main = "nvim-treesitter.configs",
-    opts = tsOpts,
+    "neovim-treesitter/nvim-treesitter",
+    dependencies = { "neovim-treesitter/treesitter-parser-registry" },
+    lazy = false,
     build = ":TSUpdate",
-    event = "VeryLazy",
+    config = tssetup,
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    main = "nvim-treesitter.configs",
-    config = function()
-      require("nvim-next.integrations").treesitter_textobjects()
-      require("nvim-treesitter.configs").setup(tsObjOpts)
+    branch = "main",
+    init = function()
+      -- Disable entire built-in ftplugin mappings to avoid conflicts.
+      vim.g.no_plugin_maps = true
     end,
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "ghostbuster91/nvim-next",
-    },
     event = "VeryLazy",
   },
 }

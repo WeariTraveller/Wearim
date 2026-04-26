@@ -7,8 +7,8 @@ M.Path = Path
 M.getModuleFilesInDir = function(dir)
   return vim
     .iter(vim.fs.dir(dir))
-    :map(Path.new)
-    :filter(function(item) return item:is_file() and item:suffix() == ".lua" end)
+    :map(function(path, typ) return typ == "file" and (Path.new(dir) / path) or nil end)
+    :filter(function(item) return item:suffix() == ".lua" end)
 end
 
 M.getModuleNamesInDir = function(dir)
