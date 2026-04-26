@@ -1,6 +1,5 @@
 vim.g.do_filetype_lua = true
 vim.g.did_load_filetypes = false
-isWin = vim.loop.os_uname().sysname == "Windows_NT"
 
 -- Edit
 vim.opt.tabstop = 4

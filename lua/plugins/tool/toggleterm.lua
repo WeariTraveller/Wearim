@@ -22,12 +22,12 @@ vim.api.nvim_create_autocmd("TermOpen", {
     if vim.bo[ev.buf].filetype ~= "toggleterm" then return end
     local _, term = require "toggleterm.terminal".identify()
     if term.display_name then return end
-    local stem = require "utils".Path.stem
+    local Path = require "path".Path
     -- Get [pid]:[cmd] first, then pathed program as cmd without args, at last a basename
     -- To do: remove ;#toggleterm#%d in the end
     --[[local realProg = stem { filename = vim.fn.expand("%:t"):match("^%d+:(%S+)") }]]
     local prog = --[[realProg ==]]
-      stem { filename = (term.cmd or vim.opt.shell:get()):match("^%S+") }
+      Path.new((term.cmd or vim.opt.shell:get()):match("^%S+")):stem()
     -- This will be useful after toggleterm migrates to jobstart, replacing deprecated termopen
     --[[and realProg or string.format("scripts in %s", realProg)]]
     -- It's amazing that term.count could be nil
