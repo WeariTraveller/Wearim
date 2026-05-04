@@ -30,7 +30,7 @@ local function ensureInstalled(list)
   if type(list) ~= "table" then list = { list } end
   for _, i in ipairs(list) do
     local prog = normalize(i)
-    if not vim.fn.executable(prog.cmd) then
+    if vim.fn.executable(prog.cmd) == 0 then
       local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
       if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
       vim.api.nvim_echo({ { msg } }, true, { err = true })
