@@ -5,12 +5,7 @@ return {
   event = "VeryLazy",
   opts = {
     auto_update = true,
-    ensure_installed = {
-      "cpptools",
-      "lua-language-server",
-      "texlab",
-      "tinymist",
-    },
+    ensure_installed = require "langs".mason,
   },
   dependencies = { "williamboman/mason.nvim", config = true },
 }

@@ -6,6 +6,37 @@ local allLangList = {}
 M.list = allLangList
 local lspConfigs = {}
 local dapConfigs = {}
+local installedByMason = {}
+
+local function ensureInstalled(list)
+  local function normalize(item)
+    if type(item) == "string" then
+      return {
+        name = item,
+        cmd = item,
+        source = "mason",
+      }
+    else
+      return {
+        name = item[1],
+        cmd = item.cmd or item[1],
+        tip = item.tip,
+        source = item.source or "mason",
+      }
+    end
+  end
+
+  if type(list) ~= "table" then list = { list } end
+  for _, i in ipairs(list) do
+    local prog = normalize(i)
+    if not vim.fn.executable(prog.cmd) then
+      local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
+      if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
+      vim.api.nvim_echo({ { msg } }, true, { err = true })
+    end
+    if prog.source == "mason" then table.insert(installedByMason, prog.name) end
+  end
+end
 
 -- NOTE:
 -- See nvim sources runtime/lua/vim/iter.lua L281 ~ L343
@@ -22,6 +53,7 @@ Path.getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langs")
     local config, dap = t.eoc(require("langs." .. modul), "dap")
     table.insert(lspConfigs, t.oc(config, "lsp"))
     table.insert(dapConfigs, dap and { dap, groupedLangs })
+    if t.oc(config, "ensure") then ensureInstalled(config.ensure) end
   end)
 
 M.lspIter = vim.iter(lspConfigs)
@@ -30,5 +62,7 @@ M.dapIter = vim.iter(dapConfigs):map(function(pair)
   if not pair[1].filetypes then pair[1].filetypes = pair[2] end
   return pair[1]
 end)
+
+M.mason = installedByMason
 
 return M
