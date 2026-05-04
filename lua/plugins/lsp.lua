@@ -1,7 +1,8 @@
 local lspConfig = function()
-  local lspconfig = require "lspconfig"
-
-  require "langs".lspIter:each(function(config) lspconfig[config.name].setup(config) end)
+  require "langs".lspIter:each(function(config)
+    if vim.tbl_count(config) > 1 then vim.lsp.config(config.name, config) end
+    vim.lsp.enable(config.name)
+  end)
 end
 
 return {
