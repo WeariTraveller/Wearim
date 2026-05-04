@@ -7,6 +7,7 @@ M.list = allLangList
 local lspConfigs = {}
 local dapConfigs = {}
 local installedByMason = {}
+local null = {}
 
 local function ensureInstalled(list)
   local function normalize(item)
@@ -54,6 +55,7 @@ Path.getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langs")
     table.insert(lspConfigs, t.oc(config, "lsp"))
     table.insert(dapConfigs, dap and { dap, groupedLangs })
     if t.oc(config, "ensure") then ensureInstalled(config.ensure) end
+    table.insert(null, t.oc(config, "null"))
   end)
 
 M.lspIter = vim.iter(lspConfigs)
@@ -64,5 +66,7 @@ M.dapIter = vim.iter(dapConfigs):map(function(pair)
 end)
 
 M.mason = installedByMason
+
+M.nullIter = vim.iter(null)
 
 return M
