@@ -46,7 +46,7 @@ end
 
 local tssetup = function()
   local ts = require "nvim-treesitter"
-  if not ts.get_installed() then ts.install(require "langs".list) end
+  ts.install(require "langs".list)
   vim.api.nvim_create_autocmd("FileType", {
     pattern = require "langs".list,
     callback = function()
@@ -95,7 +95,7 @@ local tsObjSetup = function()
   end
 
   toMap({ "n", "x", "o" }, ";", rep.repeat_last_move_next, "ts-obj repeats last move next")
-  toMap({ "n", "x", "o" }, ":", rep.repeat_last_move_previous, "ts-obj repeats last move previous")
+  toMap({ "n", "x", "o" }, " ", rep.repeat_last_move_previous, "ts-obj repeats last move previous")
 end
 
 return {
