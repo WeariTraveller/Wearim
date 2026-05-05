@@ -22,12 +22,12 @@ local function ensureInstalled(list)
         name = item[1],
         cmd = item.cmd or item[1],
         tip = item.tip,
-        source = item.source or "mason",
+        source = item.src or "mason",
       }
     end
   end
 
-  if type(list) ~= "table" then list = { list } end
+  if type(list) ~= "table" or not list[2] then list = { list } end
   for _, i in ipairs(list) do
     local prog = normalize(i)
     if vim.fn.executable(prog.cmd) == 0 then
