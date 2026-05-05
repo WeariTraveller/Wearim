@@ -32,4 +32,4 @@ local dap = {
   },
 }
 
-return { lsp = lsp, dap = dap }
+return { lsp = lsp, dap = dap, ensure = { "clangd", src = "sys", tip = "Included in LLVM" } }

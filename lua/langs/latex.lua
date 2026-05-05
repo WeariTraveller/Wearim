@@ -17,4 +17,4 @@ local lsp = {
   },
 }
 
-return { lsp = lsp }
+return { lsp = lsp, ensure = "texlab" }
