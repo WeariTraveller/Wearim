@@ -9,7 +9,7 @@ local dapConfigs = {}
 local installedByMason = {}
 local null = {}
 
-local function ensureInstalled(list)
+local function ensureInstalled(list, langs)
   local function normalize(item)
     if type(item) == "string" then
       return {
@@ -26,16 +26,26 @@ local function ensureInstalled(list)
       }
     end
   end
+  local function check(prog)
+    if vim.fn.executable(prog.cmd) == 0 then
+      local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
+      if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
+      vim.api.nvim_echo({ { msg, "ErrorMsg" } }, true, {})
+    end
+  end
 
   if type(list) ~= "table" or not list[2] then list = { list } end
   for _, i in ipairs(list) do
     local prog = normalize(i)
-    if vim.fn.executable(prog.cmd) == 0 then
-      local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
-      if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
-      vim.api.nvim_echo({ { msg } }, true, { err = true })
+    if prog.source == "mason" then
+      table.insert(installedByMason, prog.name)
+    else
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = langs,
+        once = true,
+        callback = function() check(prog) end,
+      })
     end
-    if prog.source == "mason" then table.insert(installedByMason, prog.name) end
   end
 end
 
@@ -54,7 +64,7 @@ Path.getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langs")
     local config, dap = t.eoc(require("langs." .. modul), "dap")
     table.insert(lspConfigs, t.oc(config, "lsp"))
     table.insert(dapConfigs, dap and { dap, groupedLangs })
-    if t.oc(config, "ensure") then ensureInstalled(config.ensure) end
+    if t.oc(config, "ensure") then ensureInstalled(config.ensure, groupedLangs) end
     table.insert(null, t.oc(config, "null"))
   end)
 
