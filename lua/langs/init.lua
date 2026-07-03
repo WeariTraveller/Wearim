@@ -46,6 +46,7 @@ end
 -- See nvim sources runtime/lua/vim/iter.lua L281 ~ L343
 -- The timing of evaluation for vim.iter is uncertain (2025 Oct 11)
 
+t.check { cmd = "tree-sitter", name = "tree-sitter-cli", src = "sys" }
 Path.getModuleNamesInDir(vim.fn.stdpath("config") .. "/lua/langs")
   :filter(function(modul) return modul ~= "init" end)
   :each(function(modul)
