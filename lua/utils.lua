@@ -43,4 +43,12 @@ M.eoc = function(firstborn, ...)
   return unpack(results)
 end
 
+M.check = function(prog)
+  if vim.fn.executable(prog.cmd) == 0 then
+    local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
+    if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
+    vim.api.nvim_echo({ { msg, "ErrorMsg" } }, true, {})
+  end
+end
+
 return M
