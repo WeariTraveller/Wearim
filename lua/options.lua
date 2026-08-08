@@ -82,3 +82,24 @@ end
 for name, colour in pairs(style.colours) do
   vim.api.nvim_set_hl(0, name, colour)
 end
+
+-- Let terminal emulator know nvim's cwd has changed, so that you can open
+-- a new terminal tab in the same dir as nvim if possible.
+-- Edited from https://github.com/wezterm/wezterm/discussions/3718#discussioncomment-6092911
+function oscChangeCwd(dest)
+  -- Update cwd
+  local cwd_uri = vim.uri_from_fname(dest)
+  local osc7_seq = string.format("\027]7;%s\027\\", cwd_uri)
+  io.write(osc7_seq)
+
+  -- Update title
+  local cwdDirname = vim.fn.fnamemodify(dest, ":t")
+  -- Deal with the root directory, using `/` rather than nothing
+  -- Pay attention to keeping Windows drive letter
+  if cwdDirname == "" then cwdDirname = dest end
+  local osc1_seq = string.format("\x1b]2; nvim(" .. cwdDirname .. ")\x1b\\")
+  io.write(osc1_seq)
+end
+vim.api.nvim_create_autocmd("DirChanged", {
+  callback = function() oscChangeCwd(vim.fn.getcwd()) end,
+})
