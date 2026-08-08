@@ -16,6 +16,7 @@ setmetatable(M.env, {
 
 M.file = function() return vim.fn.expand("%:p") end
 M.fileRoot = function() return vim.fn.expand("%:p:r") end
+M.bufnr = vim.api.nvim_get_current_buf
 
 -- Optional chaining
 M.oc = function(firstborn, ...)
@@ -48,6 +49,32 @@ M.check = function(prog)
     local msg = string.format("Command not found: %s (for %s). Source: %s.", prog.cmd, prog.name, prog.source)
     if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
     vim.api.nvim_echo({ { msg, "ErrorMsg" } }, true, {})
+  end
+end
+
+M.wslpath2Win = function(rawPath)
+  -- Raw ouput ends with \n
+  return string.sub(vim.system({ "wslpath", "-w", rawPath }):wait().stdout, 1, -2)
+end
+M.winpath2Wsl = function(rawPath) return string.sub(vim.system({ "wslpath", "-u", rawPath }):wait().stdout, 1, -2) end
+
+if isWSL then
+  -- Avoid using "firefox.exe" directly in case of over SSH, where win $PATH isn't injected
+  -- where.exe uses raw win $PATH
+  local firefox = M.winpath2Wsl(string.sub(
+    -- Raw ouput ends with \r\n
+    vim.system({ "/mnt/c/Windows/System32/where.exe", "firefox" }):wait().stdout,
+    1,
+    -3
+  ))
+  function openFileInBrowser(path)
+    path = path or M.file()
+    vim.system({ firefox, "--new-tab", M.wslpath2Win(path) })
+  end
+else
+  function openFileInBrowser(path)
+    path = path or M.file()
+    vim.system({ "firefox", "--new-tab", path })
   end
 end
 
