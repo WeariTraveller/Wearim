@@ -59,22 +59,14 @@ end
 M.winpath2Wsl = function(rawPath) return string.sub(vim.system({ "wslpath", "-u", rawPath }):wait().stdout, 1, -2) end
 
 if isWSL then
-  -- Avoid using "firefox.exe" directly in case of over SSH, where win $PATH isn't injected
-  -- where.exe uses raw win $PATH
-  local firefox = M.winpath2Wsl(string.sub(
-    -- Raw ouput ends with \r\n
-    vim.system({ "/mnt/c/Windows/System32/where.exe", "firefox" }):wait().stdout,
-    1,
-    -3
-  ))
   function openFileInBrowser(path)
     path = path or M.file()
-    vim.system({ firefox, "--new-tab", M.wslpath2Win(path) })
+    vim.system({ vim.g.browser, "--new-tab", M.wslpath2Win(path) })
   end
 else
   function openFileInBrowser(path)
     path = path or M.file()
-    vim.system({ "firefox", "--new-tab", path })
+    vim.system({ vim.g.browser, "--new-tab", path })
   end
 end
 

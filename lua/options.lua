@@ -103,3 +103,5 @@ end
 vim.api.nvim_create_autocmd("DirChanged", {
   callback = function() oscChangeCwd(vim.fn.getcwd()) end,
 })
+
+vim.g.browser = os.getenv "browser"
