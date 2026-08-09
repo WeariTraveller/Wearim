@@ -59,15 +59,9 @@ end
 M.winpath2Wsl = function(rawPath) return string.sub(vim.system({ "wslpath", "-u", rawPath }):wait().stdout, 1, -2) end
 
 if isWSL then
-  function openFileInBrowser(path)
-    path = path or M.file()
-    vim.system({ vim.g.browser, "--new-tab", M.wslpath2Win(path) })
-  end
+  function M.browseFile(path) vim.system({ vim.g.browser, "--new-tab", M.wslpath2Win(path) }) end
 else
-  function openFileInBrowser(path)
-    path = path or M.file()
-    vim.system({ vim.g.browser, "--new-tab", path })
-  end
+  function M.browseFile(path) vim.system({ vim.g.browser, "--new-tab", path }) end
 end
 
 return M
