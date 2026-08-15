@@ -15,14 +15,14 @@ local function ensureInstalled(list, langs)
       return {
         name = item,
         cmd = item,
-        source = "mason",
+        src = "mason",
       }
     else
       return {
         name = item[1],
         cmd = item.cmd or item[1],
         tip = item.tip,
-        source = item.src or "mason",
+        src = item.src or "mason",
       }
     end
   end
@@ -30,7 +30,7 @@ local function ensureInstalled(list, langs)
   if type(list) ~= "table" or not list[2] then list = { list } end
   for _, i in ipairs(list) do
     local prog = normalize(i)
-    if prog.source == "mason" then
+    if prog.src == "mason" then
       table.insert(installedByMason, prog.name)
     else
       vim.api.nvim_create_autocmd("FileType", {

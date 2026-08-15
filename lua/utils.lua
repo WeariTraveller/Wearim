@@ -46,7 +46,7 @@ end
 
 M.check = function(prog)
   if vim.fn.executable(prog.cmd) == 0 then
-    local msg = string.format("Command not found: %s (for %s).\nSource: %s.", prog.cmd, prog.name, prog.source)
+    local msg = string.format("Command not found: %s (for %s).\nSource: %s.", prog.cmd, prog.name, prog.src)
     if prog.tip then msg = msg .. "\nTip: " .. prog.tip end
     vim.api.nvim_echo({ { msg } }, true, { err = true })
   end
