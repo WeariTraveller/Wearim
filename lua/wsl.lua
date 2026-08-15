@@ -9,7 +9,7 @@ function M.pathFromWin(winPath) return string.sub(vim.system({ "wslpath", "-u", 
 function M.whereInWin(target)
   return M.pathFromWin(string.sub(
     -- Raw ouput ends with \r\n
-    vim.system({ "/mnt/c/Windows/System32/where.exe", "firefox" }):wait().stdout,
+    vim.system({ "/mnt/c/Windows/System32/where.exe", target }):wait().stdout,
     1,
     -3
   ))
