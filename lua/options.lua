@@ -2,7 +2,8 @@ vim.g.do_filetype_lua = true
 vim.g.did_load_filetypes = false
 vim.env.CC = "gcc"
 local masonBin = vim.fn.stdpath("data") .. "/mason/bin"
-require "utils".env.PATH:append(masonBin)
+local t = require "utils"
+t.env.PATH:append(masonBin)
 
 -- Edit
 vim.opt.tabstop = 4
@@ -105,3 +106,5 @@ vim.api.nvim_create_autocmd("DirChanged", {
 })
 
 vim.g.browser = os.getenv "browser"
+
+if isWSL then t.check { cmd = "xclip", name = "Win-WSL clipboard", src = "github.com/Konfekt/win-bash-xclip-xsel" } end
