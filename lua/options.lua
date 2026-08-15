@@ -107,4 +107,20 @@ vim.api.nvim_create_autocmd("DirChanged", {
 
 vim.g.browser = os.getenv "browser"
 
-if isWSL then t.check { cmd = "xclip", name = "Win-WSL clipboard", src = "github.com/Konfekt/win-bash-xclip-xsel" } end
+if isWSL then
+  local wsl = require "wsl"
+  local clip = wsl.whereInWin("clip.exe")
+  local pwsh = wsl.whereInWin("pwsh.exe")
+  vim.g.clipboard = {
+    name = "WslClipboard",
+    copy = {
+      ["+"] = clip,
+      ["*"] = clip,
+    },
+    paste = {
+      ["+"] = pwsh .. ' -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ["*"] = pwsh .. ' -NoLogo -NoProfile -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = 0,
+  }
+end
