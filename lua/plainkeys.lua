@@ -20,17 +20,19 @@ map("n", "<C-Up>", "<cmd>resize -2<CR>", "Win ↕size -2")
 map("n", "<C-Down>", "<cmd>resize +2<CR>", "Win ↕size +2")
 map("n", "sl", "<cmd>resize -10<CR>", "Win ↕size -10")
 map("n", "sh", "<cmd>resize +10<CR>", "Win ↕size +10")
+map("n", "<C-b>", "<cmd>bd<cr>", "bd")
+map("n", "<C-B>", "<cmd>bd!<cr>", "bd!")
 -- Solve the problem that sometimes the window remains after normal bd
 map("n", "<A-d>", function()
   local buf = vim.api.nvim_get_current_buf()
   vim.cmd "close"
   vim.cmd("bd " .. buf)
-end, "bd")
+end, "close & bd")
 map("n", "<A-D>", function()
   local buf = vim.api.nvim_get_current_buf()
   vim.cmd "close!"
   vim.cmd("bd! " .. buf)
-end, "bd!")
+end, "close! & bd!")
 
 -- Indent
 map("v", "<", "<gv", "Indent")
