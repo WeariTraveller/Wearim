@@ -93,6 +93,10 @@ local opts = {
     copy_path_relative_to_home = function(state) return modify(getFile(state), ":~") end,
   },
   filesystem = {
+    filtered_items = {
+      visible = true,
+      hide_dotfiles = false,
+    },
     group_empty_dirs = true,
     follow_current_file = {
       enabled = true,
