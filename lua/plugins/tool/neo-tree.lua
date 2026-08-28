@@ -5,6 +5,7 @@ local kinds = vim.iter(style.icons.kind):fold({}, function(t, k, v)
 end)
 local function getFile(state) return state.tree:get_node():get_id() end
 local modify = vim.fn.fnamemodify
+local function copy(ctx) vim.fn.setreg("+", ctx) end
 
 local opts = {
   popup_border_style = style.border,
@@ -87,10 +88,10 @@ local opts = {
       end
     end,
 
-    copy_path_relative_to_cwd = function(state) return modify(getFile(state), ":.") end,
-    copy_absolute_path = function(state) return getFile(state) end,
-    copy_filename = function(state) return state.tree:get_node().name end,
-    copy_path_relative_to_home = function(state) return modify(getFile(state), ":~") end,
+    copy_path_relative_to_cwd = function(state) copy(modify(getFile(state), ":.")) end,
+    copy_absolute_path = function(state) copy(getFile(state)) end,
+    copy_filename = function(state) copy(state.tree:get_node().name) end,
+    copy_path_relative_to_home = function(state) copy(modify(getFile(state), ":~")) end,
   },
   filesystem = {
     filtered_items = {
