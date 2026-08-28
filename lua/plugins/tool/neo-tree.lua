@@ -3,6 +3,8 @@ local kinds = vim.iter(style.icons.kind):fold({}, function(t, k, v)
   t[k] = { icon = v }
   return t
 end)
+local function getFile(state) return state.tree:get_node():get_id() end
+local modify = vim.fn.fnamemodify
 
 local opts = {
   popup_border_style = style.border,
@@ -39,25 +41,23 @@ local opts = {
   window = {
     width = style.widthNr,
     mappings = {
-      ["<Space>"] = "none",
-      ["gx"] = "nvimOpen",
-
-      ["h"] = "smartKeyH",
-      ["l"] = "smartKeyL",
+      ["h"] = "smart_key_h",
+      ["l"] = "smart_key_l",
 
       -- Swap default split behavior
       ["S"] = "open_vsplit",
       ["s"] = "open_split",
+
+      ["y"] = "copy_path_relative_to_cwd",
+      ["Y"] = "copy_absolute_path",
+      ["c"] = "none",
+      ["cy"] = "copy_filename",
+      ["cc"] = "copy",
+      ["ch"] = "copy_path_relative_to_home",
     },
   },
   commands = {
-    nvimOpen = function(state)
-      local node = state.tree:get_node()
-      local path = node:get_id()
-      vim.ui.open(path)
-    end,
-
-    smartKeyH = function(state)
+    smart_key_h = function(state)
       local node = state.tree:get_node()
       if node.type == "directory" and node:is_expanded() then
         if state.name == "filesystem" then
@@ -70,7 +70,7 @@ local opts = {
       end
     end,
 
-    smartKeyL = function(state)
+    smart_key_l = function(state)
       local node = state.tree:get_node()
       if node.type == "directory" then
         if not node:is_expanded() then
@@ -86,6 +86,11 @@ local opts = {
         require("neo-tree.sources.common.commands").open(state)
       end
     end,
+
+    copy_path_relative_to_cwd = function(state) return modify(getFile(state), ":.") end,
+    copy_absolute_path = function(state) return getFile(state) end,
+    copy_filename = function(state) return state.tree:get_node().name end,
+    copy_path_relative_to_home = function(state) return modify(getFile(state), ":~") end,
   },
   filesystem = {
     group_empty_dirs = true,
