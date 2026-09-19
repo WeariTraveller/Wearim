@@ -18,6 +18,12 @@ local opts = function()
     }
   end
 
+  local telescopeConfig = require("telescope.config")
+  local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+  table.insert(vimgrep_arguments, "--hidden")
+  table.insert(vimgrep_arguments, "--glob")
+  table.insert(vimgrep_arguments, "!**/.git/*")
+
   return {
     defaults = {
       mappings = {
@@ -32,10 +38,18 @@ local opts = function()
       },
       prompt_prefix = " ",
       selection_caret = " ",
+      vimgrep_arguments = vimgrep_arguments,
     },
     pickers = {
       find_files = {
         theme = "ivy",
+        hidden = true,
+      },
+      grep_string = {
+        additional_args = { "--hidden" },
+      },
+      live_grep = {
+        additional_args = { "--hidden" },
       },
       oldfiles = {
         theme = "ivy",
