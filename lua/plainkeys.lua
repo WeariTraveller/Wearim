@@ -1,6 +1,8 @@
 function toMap(mode, lhs, rhs, desc) vim.keymap.set(mode, lhs, rhs, { desc = desc }) end
 local map = toMap
 
+map("n", "<esc>/", "<cmd>noh<CR>", "Quit search highlight")
+
 -- Split
 map("n", "sh", "<cmd>sp<CR>", "↔split")
 map("n", "sv", "<cmd>vsp<CR>", "↕split")
