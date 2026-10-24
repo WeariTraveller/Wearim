@@ -15,5 +15,9 @@ return {
       { "<m-=>", desc = "Toggle term" },
       require "plugins.tool.telescope".whichKey,
     },
+    triggers = {
+      { "<auto>", mode = "nixsotc" },
+      { "s", mode = "n" },
+    },
   },
 }

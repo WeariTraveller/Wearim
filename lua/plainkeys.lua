@@ -4,8 +4,8 @@ local map = toMap
 map("n", "<esc>/", "<cmd>noh<CR>", "Quit search highlight")
 
 -- Split
-map("n", "sh", "<cmd>sp<CR>", "↔split")
-map("n", "sv", "<cmd>vsp<CR>", "↕split")
+map("n", "sp", "<cmd>vsp<CR>", "↔split")
+map("n", "sP", "<cmd>sp<CR>", "↕split")
 
 -- Move
 map({ "n", "i", "v", "t" }, "<A-h>", "<C-w>h", "To left window")
@@ -16,12 +16,12 @@ map({ "n", "i", "v", "t" }, "<A-l>", "<C-w>l", "To right window")
 ---Resize
 map("n", "<C-Left>", "<cmd>vertical resize -2<CR>", "Win ↔size -2")
 map("n", "<C-Right>", "<cmd>vertical resize +2<CR>", "Win ↔size +2")
-map("n", "sn", "<cmd>vertical resize -20<CR>", "Win ↔size -20")
-map("n", "sw", "<cmd>vertical resize +20<CR>", "Win ↔size +20")
+map("n", "sh", "<cmd>vertical resize -20<CR>", "Win ↔size -20")
+map("n", "sH", "<cmd>vertical resize +20<CR>", "Win ↔size +20")
 map("n", "<C-Up>", "<cmd>resize -2<CR>", "Win ↕size -2")
 map("n", "<C-Down>", "<cmd>resize +2<CR>", "Win ↕size +2")
-map("n", "sl", "<cmd>resize -10<CR>", "Win ↕size -10")
-map("n", "sh", "<cmd>resize +10<CR>", "Win ↕size +10")
+map("n", "sv", "<cmd>resize -10<CR>", "Win ↕size -10")
+map("n", "sV", "<cmd>resize +10<CR>", "Win ↕size +10")
 map("n", "<C-b>", "<cmd>bd<cr>", "bd")
 map("n", "<C-B>", "<cmd>bd!<cr>", "bd!")
 -- Solve the problem that sometimes the window remains after normal bd
@@ -81,19 +81,19 @@ map("n", "<leader>ht", function() vim.treesitter.inspect_tree() end, "Treesitter
 map("n", "<leader>hq", function() vim.treesitter.query.edit() end, "Treesitter Query")
 
 -- Force the insertion of a single punct
-for _, punct in pairs { "(", ")", "[", "]", "{", "}" } do
+for _, punct in pairs { "(", ")", "[", "]", "{", "}", "'", '"', "`" } do
   map("i", "<A-" .. punct .. ">", punct)
 end
 
 -- lspsaga
-map("n", "gd", "<cmd>Lspsaga peek_definition<CR>")
-map("n", "gD", "<cmd>lua vim.lsp.buf.definition()<CR>")
-map("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
-map("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-map("n", "gr", "<cmd>Lspsaga rename<CR>")
-map("n", "go", "<cmd>lua vim.diagnostic.open_float()<CR>")
-map("n", "gp", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-map("n", "gn", "<cmd>lua vim.diagnostic.goto_next()<CR>")
-map("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
-map("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>")
-map({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+map("n", "rn", "<cmd>Lspsaga rename<CR>")
+map({ "n", "v" }, "sa", "<cmd>Lspsaga code_action<CR>")
+map("n", "sd", "<cmd>Lspsaga peek_definition<CR>")
+map("n", "gd", "<cmd>Lspsaga goto_definition<CR>")
+map("n", "gD", "<cmd>Lspsaga goto_type_definition<CR>")
+map("n", "sk", "<cmd>Lspsaga show_cursor_diagnostics<CR>")
+map("n", "sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+-- `gn` needs desc explicitly, or which-key will mistake it
+map("n", "gn", "<cmd>Lspsaga diagnostic_jump_next<CR>", "Jump to next lsp diagnostic")
+map("n", "gp", "<cmd>Lspsaga diagnostic_jump_prev<CR>", "Jump to prev lsp diagnostic")
+map("n", "sf", "<cmd>Lspsaga lsp_finder<CR>")
