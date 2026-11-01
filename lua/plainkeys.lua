@@ -47,11 +47,26 @@ map("n", "sc", "<C-w>c", "Close curr")
 map("n", "<A-C>", "<cmd>close!<cr>", "Force close curr")
 map("n", "so", "<C-w>o", "Close others")
 
+map({ "n", "v" }, "y", '"ay')
+map("n", "p", '"ap')
+map("n", "P", '"aP')
+map("v", "<leader>y", function()
+  local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = vim.fn.mode() })
+  for i, line in ipairs(lines) do
+    lines[i] = line:gsub("^%+", "")
+  end
+  vim.fn.setreg("a", lines, "V")
+end, "Copy selection and remove leading +")
+map("x", "y", function()
+  local lines = vim.fn.getregion(vim.fn.getpos("v"), vim.fn.getpos("."), { type = "\22" })
+  vim.fn.setreg("a", lines, "V")
+end, "Copy visual block as normal text")
+map("x", "<leader>y", "y", "Copy raw visual block")
 if vim.fn.has("clipboard") == true then
   -- Use sys clipboard by default
   vim.opt.clipboard:append("unnamedplus")
 end
-map("v", "<A-y>", '"+y', "Copy to sys")
+map({ "n", "v" }, "<A-y>", '"+y', "Copy to sys")
 map("n", "<A-p>", '"+p', "Paste from sys")
 vim.keymap.set(
   { "i", "c" },
