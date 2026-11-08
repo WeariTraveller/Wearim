@@ -95,7 +95,7 @@ local tsObjSetup = function()
   end
 
   toMap({ "n", "x", "o" }, ";", rep.repeat_last_move_next, "ts-obj repeats last move next")
-  toMap({ "n", "x", "o" }, " ", rep.repeat_last_move_previous, "ts-obj repeats last move previous")
+  toMap({ "n", "x", "o" }, ",", rep.repeat_last_move_previous, "ts-obj repeats last move previous")
 end
 
 return {

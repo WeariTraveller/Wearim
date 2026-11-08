@@ -22,7 +22,7 @@ vim.opt.fileencodings = {
   "utf32",
 }
 vim.opt.viminfofile = "NONE"
-vim.g.mapleader = ","
+vim.g.mapleader = " "
 vim.opt.fileformats = { "unix", "dos" }
 
 -- UI
